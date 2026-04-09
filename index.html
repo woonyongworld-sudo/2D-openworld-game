@@ -11,7 +11,6 @@
 body{background:#000;overflow:hidden;touch-action:none;font-family:'Press Start 2P',monospace;}
 canvas{display:block;image-rendering:pixelated;image-rendering:crisp-edges;}
 
-/* ── Login ── */
 #loginScreen{
   position:fixed;inset:0;z-index:999;
   background:radial-gradient(ellipse at 50% 60%,#2a1a08,#0a0500);
@@ -21,7 +20,7 @@ canvas{display:block;image-rendering:pixelated;image-rendering:crisp-edges;}
   display:flex;flex-direction:column;align-items:center;gap:16px;
   padding:28px 22px;width:calc(100% - 32px);max-width:320px;
   background:linear-gradient(180deg,#1a0e04,#0d0700);
-  border:3px solid #8a6a2a;box-shadow:inset 0 0 0 1px #c8a04044;border-radius:3px;
+  border:3px solid #8a6a2a;border-radius:3px;
 }
 #loginTitle{
   font-size:clamp(9px,3vw,14px);color:#f0c040;
@@ -29,6 +28,17 @@ canvas{display:block;image-rendering:pixelated;image-rendering:crisp-edges;}
   text-align:center;line-height:2.2;
 }
 #loginTitle small{font-size:.65em;color:#c8901a;display:block;margin-top:4px;}
+
+/* 캐릭터 미리보기 */
+#charPreview{
+  width:80px;height:80px;border-radius:50%;
+  border:3px solid #8a6a2a;overflow:hidden;
+  background:#0a0500;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 16px #f0c04044;
+}
+#charPreview img{width:72px;height:72px;image-rendering:pixelated;}
+#previewLabel{font-size:7px;color:#c8a040;}
+
 .ri{
   padding:12px 14px;font-size:11px;border-radius:2px;
   border:2px solid #8a6a2a;background:#080500;color:#f0e060;
@@ -48,28 +58,26 @@ canvas{display:block;image-rendering:pixelated;image-rendering:crisp-edges;}
 .cb.sel{border-color:#f0c040;color:#f0c040;background:#180e00;}
 .rb{
   padding:13px 0;font-size:10px;border-radius:2px;
-  border:2px solid #8a6a2a;background:linear-gradient(180deg,#3a2808,#1a1000);
+  border:2px solid #8a6a2a;
+  background:linear-gradient(180deg,#3a2808,#1a1000);
   color:#f0c040;cursor:pointer;width:100%;
   font-family:'Press Start 2P',monospace;letter-spacing:2px;
   box-shadow:0 4px 0 #050200;
 }
 .rb:active{transform:translateY(3px);box-shadow:0 1px 0 #050200;}
 
-/* ── Top HUD ── */
+/* HUD */
 #topHud{
   position:fixed;top:0;left:0;right:0;z-index:20;
   padding:6px 8px;padding-top:calc(6px + env(safe-area-inset-top));
   display:flex;align-items:center;gap:8px;
-  background:linear-gradient(180deg,rgba(0,0,0,.82),transparent);
+  background:linear-gradient(180deg,rgba(0,0,0,.85),transparent);
 }
-#pName{font-size:8px;color:#f0c040;flex:1;text-shadow:0 0 6px #f0c04066;}
+#pName{font-size:7px;color:#f0c040;flex:1;text-shadow:0 0 6px #f0c04066;}
 #oc{font-size:7px;color:#f0c040;}
-#mm{
-  width:80px;height:54px;border:2px solid #8a6a2a;
-  overflow:hidden;flex-shrink:0;
-}
+#mm{width:80px;height:54px;border:2px solid #8a6a2a;overflow:hidden;flex-shrink:0;}
 
-/* ── Joystick ── */
+/* Joystick */
 #jWrap{
   position:fixed;bottom:22px;left:18px;
   width:120px;height:120px;border-radius:50%;
@@ -85,66 +93,7 @@ canvas{display:block;image-rendering:pixelated;image-rendering:crisp-edges;}
   box-shadow:0 0 12px rgba(240,192,64,.4);
 }
 
-/* ── Chat button ── */
-#chatToggle{
-  position:fixed;bottom:22px;right:18px;
-  width:56px;height:56px;border-radius:50%;
-  border:2px solid #8a6a2a;background:#0d0800;
-  color:#f0c040;font-size:24px;
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;z-index:15;touch-action:manipulation;
-  box-shadow:0 3px 0 #050200;
-}
-#chatToggle:active{transform:translateY(2px);box-shadow:0 1px 0 #050200;}
-#chatUnread{
-  position:absolute;top:-4px;right:-4px;
-  width:18px;height:18px;border-radius:50%;
-  background:#ee3333;color:#fff;
-  font-size:8px;display:none;align-items:center;justify-content:center;
-  font-family:'Press Start 2P',monospace;
-}
-
-/* ── Chat panel ── */
-#chatPanel{
-  position:fixed;bottom:0;left:0;right:0;
-  background:rgba(8,5,0,.96);
-  border-top:2px solid #8a6a2a;
-  box-shadow:inset 0 1px 0 #c8a04033;
-  transform:translateY(100%);transition:transform .28s ease;
-  z-index:30;padding-bottom:env(safe-area-inset-bottom);
-}
-#chatPanel.open{transform:translateY(0);}
-#chatHdr{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:8px 14px 6px;border-bottom:1px solid #c8a04022;
-}
-#chatHdr span{font-size:8px;color:#f0c040;letter-spacing:1px;}
-#chatX{background:none;border:none;color:#8a6a2a;font-size:20px;cursor:pointer;line-height:1;}
-#chatLog{
-  height:180px;overflow-y:auto;padding:8px 12px;
-  display:flex;flex-direction:column;gap:4px;
-  scrollbar-width:thin;scrollbar-color:#8a6a2a22 transparent;
-}
-#chatLog::-webkit-scrollbar{width:3px;}
-#chatLog::-webkit-scrollbar-thumb{background:#8a6a2a44;}
-.cm{font-size:9px;line-height:1.8;word-break:break-word;color:#c8b07a;}
-.cm .sn{font-weight:700;}
-.cm.sys{color:#6a5030;font-style:italic;}
-#chatInputRow{display:flex;gap:6px;padding:8px 12px;}
-#chatIn{
-  flex:1;padding:10px 12px;border-radius:2px;font-size:10px;
-  border:1px solid #8a6a2a;background:#080500;color:#f0e060;
-  outline:none;font-family:'Press Start 2P',monospace;
-}
-#chatIn:focus{border-color:#f0c040;}
-#chatSd{
-  padding:10px 14px;border-radius:2px;border:1px solid #8a6a2a;
-  background:#1a1000;color:#f0c040;font-size:9px;cursor:pointer;
-  font-family:'Press Start 2P',monospace;
-}
-#chatSd:active{background:#2a1800;}
-
-/* ── Action buttons (diamond) ── */
+/* Action buttons */
 #actionPad{
   position:fixed;bottom:22px;right:14px;
   width:148px;height:148px;
@@ -155,79 +104,118 @@ canvas{display:block;image-rendering:pixelated;image-rendering:crisp-edges;}
 }
 .actBtn{
   width:46px;height:46px;border-radius:50%;
-  border:2px solid rgba(255,255,255,0.3);
+  border:2px solid rgba(255,255,255,.25);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   cursor:pointer;touch-action:manipulation;user-select:none;
   font-family:'Press Start 2P',monospace;
-  box-shadow:0 3px 0 rgba(0,0,0,0.5);
-  transition:transform .08s,box-shadow .08s;
-  gap:1px;
+  box-shadow:0 3px 0 rgba(0,0,0,.5);gap:1px;
 }
-.actBtn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,0.5);}
-.actBtn .bl{font-size:7px;color:rgba(255,255,255,0.9);font-weight:700;}
+.actBtn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.5);}
+.actBtn .bl{font-size:7px;color:rgba(255,255,255,.9);font-weight:700;}
 .actBtn .bi{font-size:15px;line-height:1;}
 .actBtn.blank{background:transparent;border:none;box-shadow:none;pointer-events:none;}
-/* A — 공격 (빨강) */
 #btnA{background:radial-gradient(circle at 40% 35%,#ff5533,#cc1100);border-color:#ff7755;}
-/* B — 스킬 (파랑) */
 #btnB{background:radial-gradient(circle at 40% 35%,#4488ff,#1133cc);border-color:#66aaff;}
-/* C — 상호작용 (초록) */
 #btnC{background:radial-gradient(circle at 40% 35%,#44cc66,#118833);border-color:#66ee88;}
-/* D — 설정가능 (노랑) */
 #btnD{background:radial-gradient(circle at 40% 35%,#ffcc22,#cc8800);border-color:#ffee66;}
 
 /* D 설정 팝업 */
 #dPopup{
   position:fixed;bottom:180px;right:14px;
-  background:#0d0800;border:2px solid #8a6a2a;
-  box-shadow:inset 0 0 0 1px #c8a04033;
-  padding:10px;border-radius:3px;z-index:40;
-  display:none;flex-direction:column;gap:6px;width:160px;
+  background:#0d0800;border:2px solid #8a6a2a;padding:10px;
+  border-radius:3px;z-index:40;display:none;flex-direction:column;gap:6px;width:160px;
 }
 #dPopup.open{display:flex;}
 #dPopup .dp-title{font-size:7px;color:#f0c040;text-align:center;margin-bottom:4px;}
 .dopt{
   padding:7px 10px;font-size:7px;border:1px solid #5a3a10;
   background:#180e00;color:#f0d888;cursor:pointer;
-  font-family:'Press Start 2P',monospace;border-radius:2px;
-  text-align:center;
+  font-family:'Press Start 2P',monospace;border-radius:2px;text-align:center;
 }
-.dopt:active,.dopt.selected{border-color:#f0c040;color:#f0c040;background:#2a1800;}
+.dopt.selected{border-color:#f0c040;color:#f0c040;background:#2a1800;}
 
-/* Hit flash overlay */
-#hitFlash{
-  position:fixed;inset:0;pointer-events:none;z-index:50;
-  background:rgba(255,50,0,0);transition:background .08s;
+/* Chat button */
+#chatToggle{
+  position:fixed;bottom:90px;right:18px;
+  width:44px;height:44px;border-radius:50%;
+  border:2px solid #8a6a2a;background:#0d0800;
+  color:#f0c040;font-size:20px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;z-index:15;touch-action:manipulation;
+}
+#chatUnread{
+  position:absolute;top:-4px;right:-4px;width:18px;height:18px;
+  border-radius:50%;background:#ee3333;color:#fff;
+  font-size:8px;display:none;align-items:center;justify-content:center;
 }
 
-/* Skill effect canvas overlay */
-#fxCanvas{position:fixed;inset:0;pointer-events:none;z-index:19;}
+/* Chat panel */
+#chatPanel{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(8,5,0,.96);border-top:2px solid #8a6a2a;
+  transform:translateY(100%);transition:transform .25s;z-index:30;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+#chatPanel.open{transform:translateY(0);}
+#chatHdr{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:8px 14px 6px;border-bottom:1px solid #c8a04022;
+}
+#chatHdr span{font-size:8px;color:#f0c040;}
+#chatX{background:none;border:none;color:#8a6a2a;font-size:20px;cursor:pointer;}
+#chatLog{
+  height:150px;overflow-y:auto;padding:8px 12px;
+  display:flex;flex-direction:column;gap:4px;
+}
+.cm{font-size:8px;line-height:1.8;word-break:break-word;color:#c8b07a;}
+.cm .sn{font-weight:700;}
+.cm.sys{color:#6a5030;font-style:italic;}
+#chatRow{display:flex;gap:6px;padding:8px 12px;}
+#chatIn{
+  flex:1;padding:10px 12px;border-radius:2px;font-size:10px;
+  border:1px solid #8a6a2a;background:#080500;color:#f0e060;
+  outline:none;font-family:'Press Start 2P',monospace;
+}
+#chatSd{
+  padding:10px 14px;border-radius:2px;border:1px solid #8a6a2a;
+  background:#1a1000;color:#f0c040;font-size:9px;cursor:pointer;
+  font-family:'Press Start 2P',monospace;
+}
 
-/* ── Notif ── */
+/* Notif */
 #nArea{
-  position:fixed;bottom:160px;left:50%;transform:translateX(-50%);
+  position:fixed;bottom:170px;left:50%;transform:translateX(-50%);
   display:flex;flex-direction:column;gap:5px;
-  pointer-events:none;z-index:40;
-  width:calc(100% - 80px);max-width:280px;
+  pointer-events:none;z-index:40;width:calc(100% - 80px);max-width:280px;
 }
 .nf{
   background:#0d0800;border:2px solid #8a6a2a;
-  box-shadow:inset 0 0 0 1px #c8a04033;
   color:#f0e080;padding:7px 12px;font-size:8px;line-height:1.8;
   animation:nfIn .2s ease;
 }
 .nf::before{content:'▶ ';color:#f0c040;}
 @keyframes nfIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* Hit flash */
+#hitFlash{position:fixed;inset:0;pointer-events:none;z-index:50;transition:background .1s;}
+#fxCanvas{position:fixed;inset:0;pointer-events:none;z-index:19;}
 </style>
 </head>
 <body>
 
-<!-- Login -->
 <div id="loginScreen">
   <div id="loginBox">
     <div id="loginTitle">🏕️ 개척 세계<small>~ 황무지를 마을로 ~</small></div>
+
+    <!-- 실시간 캐릭터 미리보기 -->
+    <div id="charPreview">
+      <img id="previewImg" src="https://api.dicebear.com/9.x/pixel-art/png?seed=hero&size=72" crossorigin="anonymous"/>
+    </div>
+    <div id="previewLabel">닉네임을 입력하면 캐릭터가 생성돼요</div>
+
     <input class="ri" id="nameIn" type="text" placeholder="이름을 입력하시오..." maxlength="10" autocomplete="off"/>
-    <div style="font-size:7px;color:#7a5a30;letter-spacing:1px;">직업 선택</div>
+
+    <div style="font-size:7px;color:#7a5a30;">직업 선택</div>
     <div id="classSelect">
       <div class="cb sel" data-c="warrior"><span class="ci">⚔️</span>전사</div>
       <div class="cb" data-c="mage"><span class="ci">🔮</span>마법사</div>
@@ -238,36 +226,29 @@ canvas{display:block;image-rendering:pixelated;image-rendering:crisp-edges;}
   </div>
 </div>
 
-<!-- Game canvas -->
 <canvas id="gc"></canvas>
 
-<!-- Top HUD -->
 <div id="topHud">
   <div id="pName">용사</div>
   <div id="oc">👥 0명</div>
   <canvas id="mm" width="76" height="50"></canvas>
 </div>
 
-<!-- Joystick -->
 <div id="jWrap"><div id="jKnob"></div></div>
 
-<!-- Action button pad (diamond layout) -->
+<!-- Action pad -->
 <div id="actionPad">
-  <!-- row1 -->
   <div class="actBtn blank"></div>
   <div class="actBtn" id="btnB"><span class="bi">✨</span><span class="bl">B</span></div>
   <div class="actBtn blank"></div>
-  <!-- row2 -->
   <div class="actBtn" id="btnC"><span class="bi">💬</span><span class="bl">C</span></div>
   <div class="actBtn blank"></div>
   <div class="actBtn" id="btnA"><span class="bi">⚔️</span><span class="bl">A</span></div>
-  <!-- row3 -->
   <div class="actBtn blank"></div>
-  <div class="actBtn" id="btnD"><span class="bi">⭐</span><span class="bl">D</span></div>
+  <div class="actBtn" id="btnD"><span class="bi">👋</span><span class="bl">D</span></div>
   <div class="actBtn blank"></div>
 </div>
 
-<!-- D button config popup -->
 <div id="dPopup">
   <div class="dp-title">⚙ D버튼 설정</div>
   <div class="dopt selected" data-d="emote_wave">👋 손흔들기</div>
@@ -277,37 +258,25 @@ canvas{display:block;image-rendering:pixelated;image-rendering:crisp-edges;}
   <div class="dopt" data-d="sprint">💨 달리기</div>
 </div>
 
-<!-- Hit flash -->
-<div id="hitFlash"></div>
+<div id="chatToggle">💬<div id="chatUnread"></div></div>
 
-<!-- FX canvas for skills -->
-<canvas id="fxCanvas"></canvas>
-<div id="chatToggle">
-  💬
-  <div id="chatUnread">0</div>
-</div>
-
-<!-- Chat panel -->
 <div id="chatPanel">
-  <div id="chatHdr">
-    <span>💬 마을 채팅</span>
-    <button id="chatX">✕</button>
-  </div>
+  <div id="chatHdr"><span>💬 마을 채팅</span><button id="chatX">✕</button></div>
   <div id="chatLog"></div>
-  <div id="chatInputRow">
+  <div id="chatRow">
     <input id="chatIn" type="text" placeholder="메시지 입력..." maxlength="30" autocomplete="off"/>
     <button id="chatSd">전송</button>
   </div>
 </div>
 
+<div id="hitFlash"></div>
+<canvas id="fxCanvas"></canvas>
 <div id="nArea"></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script>
-// ═══════════════════════════════════
-//  Firebase
-// ═══════════════════════════════════
+// ── Firebase ──────────────────────────────
 const FB={
   apiKey:"AIzaSyDy-J4d37ucBO36-mfJbtpBRxNLcRusNr8",
   authDomain:"game-test-001-57821.firebaseapp.com",
@@ -318,35 +287,53 @@ const FB={
   appId:"1:795750968042:web:52026a20a4ad831efa8593"
 };
 
-// ═══════════════════════════════════
-//  Constants
-// ═══════════════════════════════════
-const TS=48, MW=150, MH=120;
+// ── Constants ─────────────────────────────
+const TS=64, MW=120, MH=90;
 const DIR={DOWN:0,UP:1,LEFT:2,RIGHT:3};
-
-const CLS_C={warrior:'#e04428',mage:'#8844ee',archer:'#22aa44',healer:'#ddaa00'};
 const CLS_I={warrior:'⚔️',mage:'🔮',archer:'🏹',healer:'✨'};
+const CLS_C={warrior:'#ff4422',mage:'#8844ff',archer:'#22cc44',healer:'#ffcc00'};
+const SKILLS={
+  warrior:{name:'회오리베기',emoji:'🌀'},
+  mage:{name:'파이어볼',emoji:'🔥'},
+  archer:{name:'화살비',emoji:'🏹'},
+  healer:{name:'힐링',emoji:'💚'},
+};
 
-// ═══════════════════════════════════
-//  State
-// ═══════════════════════════════════
+// ── State ─────────────────────────────────
 let db,myId,myName,myColor,myClass='warrior';
 let players={};
 let myPos={x:0,y:0},myDir=DIR.DOWN,myWalkFrame=0;
 let cam={x:0,y:0};
 let lastSync=0,walkTick=0;
 const held={up:false,down:false,left:false,right:false};
-
-// Speech bubbles: {playerId: {msg, expire}}
 const bubbles={};
-const BUBBLE_DURATION=4000; // ms
-
-// Unread count
 let chatOpen=false,unreadCount=0;
+let sprintActive=false;
+let dConfig='emote_wave';
+let attackCooldown=0,skillCooldown=0;
 
-// ═══════════════════════════════════
-//  Canvas
-// ═══════════════════════════════════
+// ── DiceBear sprite cache ──────────────────
+// seed → {img, loaded}
+const spriteCache={};
+
+function getDiceBearURL(seed){
+  // Use DiceBear pixel-art style
+  const clean=encodeURIComponent(String(seed).slice(0,20));
+  return `https://api.dicebear.com/9.x/pixel-art/png?seed=${clean}&size=64&backgroundColor=transparent`;
+}
+
+function getSprite(seed){
+  if(spriteCache[seed]) return spriteCache[seed];
+  const entry={img:new Image(),loaded:false};
+  entry.img.crossOrigin='anonymous';
+  entry.img.onload=()=>{entry.loaded=true;};
+  entry.img.onerror=()=>{entry.loaded=false;};
+  entry.img.src=getDiceBearURL(seed);
+  spriteCache[seed]=entry;
+  return entry;
+}
+
+// ── Canvas ────────────────────────────────
 const gc=document.getElementById('gc');
 const ctx=gc.getContext('2d');
 const mmEl=document.getElementById('mm');
@@ -354,244 +341,238 @@ const mm=mmEl.getContext('2d');
 function resize(){gc.width=window.innerWidth;gc.height=window.innerHeight;}
 resize();window.addEventListener('resize',resize);
 
-// ═══════════════════════════════════
-//  Procedural map (황무지 base)
-// ═══════════════════════════════════
+// FX canvas
+const fxC=document.getElementById('fxCanvas');
+const fxCtx=fxC.getContext('2d');
+function resizeFX(){fxC.width=window.innerWidth;fxC.height=window.innerHeight;}
+resizeFX();window.addEventListener('resize',resizeFX);
+let fxParticles=[];
+
+// ── Map (황무지 + noise decoration) ────────
 let decorMap=[];
 function genDecor(){
   decorMap=[];
   for(let y=0;y<MH;y++){
     decorMap[y]=[];
     for(let x=0;x<MW;x++){
-      const n=(Math.sin(x*.37+y*.19)*Math.cos(x*.13-y*.41)+1)*.5;
-      decorMap[y][x]=n>.83?1:0; // 1=rock decoration
+      const n=(Math.sin(x*.41+y*.23)*Math.cos(x*.17-y*.37)+1)*.5;
+      // 0=plain 1=rock 2=dead bush 3=dry crack zone 4=light patch
+      decorMap[y][x]=n>.86?1:n>.78?2:n>.7?4:n<.12?3:0;
     }
   }
 }
 
-// ═══════════════════════════════════
-//  Tile drawing (황무지 only for now)
-// ═══════════════════════════════════
-function drawGround(x,y,px,py){
+// ── Tile drawing (improved wasteland) ─────
+// Color palette zones based on position
+function zoneColor(x,y){
+  // Subtle large-scale color variation
+  const z=Math.sin(x*.06)*Math.cos(y*.05)*.5+.5;
+  if(z>.7) return ['#9a7a48','#aa8a58','#8a6a38']; // lighter sand
+  if(z<.3) return ['#6a4a22','#7a5a32','#5a3a12']; // darker brown
+  return    ['#8a6a3a','#9a7a4a','#7a5a2a'];        // base
+}
+
+function drawGround(x,y,px,py,now){
   const s=(x*73856+y*49381)&0xffff;
   const S=TS;
-  // Base dirt color variation
-  const cols=['#8a6a3a','#7a5a2a','#9a7a4a','#856535'];
-  ctx.fillStyle=cols[s%4];
-  ctx.fillRect(px,py,S,S);
+  const [c0,c1,c2]=zoneColor(x,y);
 
-  // Crack lines
-  ctx.strokeStyle='rgba(0,0,0,0.15)';ctx.lineWidth=1;
-  if(s%5===0){
-    ctx.beginPath();ctx.moveTo(px+4+s%8,py+6);ctx.lineTo(px+14+s%6,py+22);ctx.lineTo(px+8,py+32);ctx.stroke();
-  }else if(s%5===1){
-    ctx.beginPath();ctx.moveTo(px+26+s%8,py+4);ctx.lineTo(px+18+s%4,py+20);ctx.lineTo(px+28,py+36);ctx.stroke();
-  }else if(s%5===2){
-    ctx.beginPath();ctx.moveTo(px+8,py+28);ctx.lineTo(px+22,py+40);ctx.stroke();
+  // Base fill
+  ctx.fillStyle=c0;ctx.fillRect(px,py,S,S);
+
+  // Subtle texture squares (픽셀 그리기)
+  ctx.fillStyle=c1;
+  if(s%3===0){ctx.fillRect(px+s%48+2,py+s%44+2,6,6);}
+  if(s%5===1){ctx.fillRect(px+s%40+4,py+s%36+8,4,4);}
+
+  // Crack pattern
+  ctx.strokeStyle='rgba(0,0,0,0.12)';ctx.lineWidth=1;
+  const crackType=s%6;
+  if(crackType===0){
+    ctx.beginPath();ctx.moveTo(px+6,py+10);ctx.lineTo(px+18,py+26);ctx.lineTo(px+12,py+40);ctx.stroke();
+  }else if(crackType===1){
+    ctx.beginPath();ctx.moveTo(px+36,py+6);ctx.lineTo(px+26,py+28);ctx.lineTo(px+38,py+48);ctx.stroke();
+  }else if(crackType===2){
+    ctx.beginPath();ctx.moveTo(px+10,py+38);ctx.lineTo(px+28,py+52);ctx.stroke();
+  }else if(crackType===3){
+    ctx.beginPath();ctx.moveTo(px+44,py+16);ctx.lineTo(px+30,py+34);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(px+30,py+34);ctx.lineTo(px+42,py+48);ctx.stroke();
   }
 
-  // Rocks (decorative)
-  if(decorMap[y]&&decorMap[y][x]===1){
+  // Decoration overlay
+  const d=decorMap[y]?decorMap[y][x]:0;
+  if(d===1){ // Rock
     ctx.fillStyle='#6a6a6a';
-    ctx.beginPath();ctx.ellipse(px+s%26+8,py+s%22+8,5+s%4,4+s%3,s*.1,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.ellipse(px+s%36+10,py+s%28+12,8+s%5,6+s%4,(s*.02),0,Math.PI*2);ctx.fill();
     ctx.fillStyle='#8a8a8a';
-    ctx.beginPath();ctx.ellipse(px+s%26+6,py+s%22+6,3,2,s*.1,0,Math.PI*2);ctx.fill();
+    ctx.beginPath();ctx.ellipse(px+s%36+7,py+s%28+9,4,3,(s*.02),0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='rgba(0,0,0,0.2)';
+    ctx.beginPath();ctx.ellipse(px+s%36+12,py+s%28+16,8+s%5,3,0,0,Math.PI*2);ctx.fill();
+  }else if(d===2){ // Dead bush
+    ctx.fillStyle='#5a4020';
+    ctx.fillRect(px+s%40+8,py+s%32+20,3,16);
+    ctx.fillStyle='#7a5a30';
+    ctx.fillRect(px+s%40+4,py+s%32+16,12,3);
+    ctx.fillRect(px+s%40+6,py+s%32+20,3,3);
+    ctx.fillRect(px+s%40+10,py+s%32+20,3,3);
+  }else if(d===3){ // Dry crack zone — extra deep cracks
+    ctx.strokeStyle='rgba(0,0,0,0.22)';ctx.lineWidth=2;
+    ctx.beginPath();ctx.moveTo(px,py+S/2);ctx.lineTo(px+S/3,py+S/3);ctx.lineTo(px+S,py+S*.6);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(px+S/2,py);ctx.lineTo(px+S*.4,py+S/2);ctx.stroke();
+    ctx.lineWidth=1;
+  }else if(d===4){ // Light sandy patch
+    ctx.fillStyle='rgba(220,190,130,0.25)';
+    ctx.beginPath();ctx.ellipse(px+S/2,py+S/2,S*.4,S*.35,s*.01,0,Math.PI*2);ctx.fill();
   }
 
-  // Sparse dead grass tufts
-  if(s%7===0){
-    ctx.fillStyle='#6a5520';
-    ctx.fillRect(px+s%30+4,py+s%28+10,2,7);
-    ctx.fillRect(px+s%30+7,py+s%28+12,2,5);
+  // Occasional dry grass tuft
+  if(s%11===0){
+    ctx.fillStyle='#6a5018';
+    const gx=px+s%44+4,gy=py+s%40+10;
+    ctx.fillRect(gx,gy+6,2,8);ctx.fillRect(gx+3,gy+4,2,10);ctx.fillRect(gx+6,gy+7,2,7);
+    // Leaning effect
+    ctx.fillRect(gx-1,gy+4,2,6);
   }
 }
 
-// ═══════════════════════════════════
-//  Character sprite (4-direction)
-// ═══════════════════════════════════
-function drawCharSprite(cx,cy,color,job,dir,frame,isMe){
-  const f=frame;
-  const hc={warrior:'#cc2200',mage:'#4400cc',archer:'#006622',healer:'#cc8800'};
-  const hair=hc[job]||'#333';
-  const skin='#f0c890';
+// ── Draw character (DiceBear sprite) ──────
+function drawCharacter(cx,cy,seed,dir,walkF,isMe,name,color,jobClass){
+  const S=TS;
+  const bob=(walkF===1)?-2:0; // walking bounce
 
   // Shadow
-  ctx.fillStyle='rgba(0,0,0,0.2)';
-  ctx.beginPath();ctx.ellipse(cx,cy+16,10,4,0,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='rgba(0,0,0,0.22)';
+  ctx.beginPath();ctx.ellipse(cx,cy+S*.35,12,5,0,0,Math.PI*2);ctx.fill();
 
-  if(dir===DIR.DOWN){
-    // Legs
-    ctx.fillStyle='#223366';
-    if(f===0){ctx.fillRect(cx-5,cy+4,4,10);ctx.fillRect(cx+1,cy+4,4,10);}
-    else{ctx.fillRect(cx-5,cy+6,4,8);ctx.fillRect(cx+1,cy+2,4,10);}
-    // Body
-    ctx.fillStyle=color;ctx.fillRect(cx-7,cy-6,14,12);
-    // Arms
-    if(f===0){ctx.fillRect(cx-11,cy-5,4,9);ctx.fillRect(cx+7,cy-5,4,9);}
-    else{ctx.fillRect(cx-11,cy-3,4,9);ctx.fillRect(cx+7,cy-7,4,9);}
-    // Head
-    ctx.fillStyle=skin;ctx.fillRect(cx-6,cy-18,12,12);
-    // Eyes
-    ctx.fillStyle='#111';ctx.fillRect(cx-3,cy-14,2,2);ctx.fillRect(cx+1,cy-14,2,2);
-    // Mouth
-    ctx.fillStyle='#cc7777';ctx.fillRect(cx-2,cy-11,5,1);
-    // Hair
-    ctx.fillStyle=hair;ctx.fillRect(cx-6,cy-20,12,5);
-    ctx.fillRect(cx-7,cy-18,2,7);ctx.fillRect(cx+5,cy-18,2,7);
+  // Get sprite
+  const entry=getSprite(seed);
+  const sprW=48,sprH=48; // render size
 
-  } else if(dir===DIR.UP){
-    // Legs
-    ctx.fillStyle='#223366';
-    if(f===0){ctx.fillRect(cx-5,cy+4,4,10);ctx.fillRect(cx+1,cy+4,4,10);}
-    else{ctx.fillRect(cx-5,cy+2,4,10);ctx.fillRect(cx+1,cy+6,4,8);}
-    // Body
-    ctx.fillStyle=color;ctx.fillRect(cx-7,cy-6,14,12);
-    // Arms
-    if(f===0){ctx.fillRect(cx-11,cy-5,4,9);ctx.fillRect(cx+7,cy-5,4,9);}
-    else{ctx.fillRect(cx-11,cy-7,4,9);ctx.fillRect(cx+7,cy-3,4,9);}
-    // Head (back)
-    ctx.fillStyle=skin;ctx.fillRect(cx-6,cy-18,12,12);
-    // Hair (more visible)
-    ctx.fillStyle=hair;ctx.fillRect(cx-6,cy-20,12,6);
-    ctx.fillRect(cx-7,cy-18,2,9);ctx.fillRect(cx+5,cy-18,2,9);
-    ctx.fillRect(cx-6,cy-12,12,2);
-
-  } else if(dir===DIR.LEFT){
-    // Legs
-    ctx.fillStyle='#223366';
-    if(f===0){ctx.fillRect(cx-5,cy+4,9,10);}
-    else{ctx.fillRect(cx-6,cy+3,5,10);ctx.fillRect(cx-1,cy+7,5,7);}
-    // Body
-    ctx.fillStyle=color;ctx.fillRect(cx-7,cy-6,13,12);
-    // Arm (back)
-    if(f===0)ctx.fillRect(cx+4,cy-5,4,9);
-    else ctx.fillRect(cx+4,cy-8,4,9);
-    // Head
-    ctx.fillStyle=skin;ctx.fillRect(cx-7,cy-18,11,12);
-    // Eye
-    ctx.fillStyle='#111';ctx.fillRect(cx-4,cy-14,2,2);
-    // Nose
-    ctx.fillStyle='#d0a870';ctx.fillRect(cx-7,cy-13,2,2);
-    // Hair
-    ctx.fillStyle=hair;ctx.fillRect(cx-7,cy-20,11,5);
-    ctx.fillRect(cx-8,cy-18,2,9);
-
-  } else { // RIGHT
-    // Legs
-    ctx.fillStyle='#223366';
-    if(f===0){ctx.fillRect(cx-4,cy+4,9,10);}
-    else{ctx.fillRect(cx-4,cy+7,5,7);ctx.fillRect(cx+1,cy+3,5,10);}
-    // Body
-    ctx.fillStyle=color;ctx.fillRect(cx-6,cy-6,13,12);
-    // Arm (back)
-    if(f===0)ctx.fillRect(cx-8,cy-5,4,9);
-    else ctx.fillRect(cx-8,cy-8,4,9);
-    // Head
-    ctx.fillStyle=skin;ctx.fillRect(cx-4,cy-18,11,12);
-    // Eye
-    ctx.fillStyle='#111';ctx.fillRect(cx+2,cy-14,2,2);
-    // Nose
-    ctx.fillStyle='#d0a870';ctx.fillRect(cx+5,cy-13,2,2);
-    // Hair
-    ctx.fillStyle=hair;ctx.fillRect(cx-4,cy-20,11,5);
-    ctx.fillRect(cx+6,cy-18,2,9);
+  ctx.save();
+  // Flip horizontally for LEFT direction
+  if(dir===DIR.LEFT){
+    ctx.translate(cx,0);ctx.scale(-1,1);ctx.translate(-cx,0);
   }
+  // Slight tilt for UP/DOWN feel
+  if(dir===DIR.UP){ctx.globalAlpha=0.92;}
 
-  // Weapon
-  if(job==='warrior'){
-    const wx=dir===DIR.RIGHT?cx+9:cx-11;
-    ctx.fillStyle='#ccccee';ctx.fillRect(wx,cy-14,2,20);
-    ctx.fillStyle='#aa8833';ctx.fillRect(wx-2,cy-6,6,3);
-  }else if(job==='mage'){
-    const wx=dir===DIR.RIGHT?cx+9:cx-11;
-    ctx.fillStyle='#8866cc';ctx.fillRect(wx,cy-18,2,22);
-    ctx.fillStyle='#ffcc00';ctx.fillRect(wx-2,cy-20,6,6);
-    const t2=Date.now();
-    ctx.fillStyle='rgba(180,120,255,.8)';
-    ctx.fillRect(wx+Math.cos(t2*.007)*3,cy-23+Math.sin(t2*.007)*3,3,3);
-  }else if(job==='archer'){
-    const wx=dir===DIR.RIGHT?cx+9:cx-11;
-    ctx.strokeStyle='#886633';ctx.lineWidth=2;
-    ctx.beginPath();ctx.arc(wx+1,cy-4,8,-.8,.8);ctx.stroke();
-    ctx.strokeStyle='#ccaa66';ctx.lineWidth=1;
-    ctx.beginPath();ctx.moveTo(wx+1,cy-11);ctx.lineTo(wx+1,cy+3);ctx.stroke();
+  if(entry&&entry.loaded){
+    // Draw DiceBear sprite
+    ctx.drawImage(entry.img,cx-sprW/2,cy-sprH+bob+8,sprW,sprH);
+  }else{
+    // Fallback while loading — colored circle with class icon
+    ctx.fillStyle=color||'#888';
+    ctx.beginPath();ctx.arc(cx,cy-12+bob,18,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='rgba(255,255,255,0.9)';
+    ctx.font='20px serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(CLS_I[jobClass]||'👤',cx,cy-12+bob);
   }
+  ctx.restore();
 
-  // Crown (self)
+  // Direction indicator (small arrow below sprite)
+  const arrows=[' ▼',' ▲',' ◀',' ▶'];
+  ctx.font='8px serif';ctx.textAlign='center';ctx.textBaseline='top';
+  ctx.fillStyle='rgba(255,255,255,0.5)';
+  ctx.fillText(arrows[dir]||'',cx,cy+S*.18+bob);
+
+  // Crown for self
   if(isMe){
-    ctx.fillStyle='rgba(240,192,64,.9)';
-    ctx.fillRect(cx-8,cy-24,16,3);
-    ctx.fillRect(cx-6,cy-26,3,3);ctx.fillRect(cx-1,cy-26,3,3);ctx.fillRect(cx+4,cy-26,3,3);
+    ctx.fillStyle='rgba(240,192,64,.92)';
+    ctx.fillRect(cx-10,cy-sprH+bob+2,20,4);
+    ctx.fillRect(cx-8,cy-sprH+bob-2,4,4);
+    ctx.fillRect(cx-2,cy-sprH+bob-2,4,4);
+    ctx.fillRect(cx+4,cy-sprH+bob-2,4,4);
   }
+
+  // Name tag
+  ctx.font='bold 8px "Press Start 2P",monospace';
+  const tw=ctx.measureText(name).width;
+  ctx.fillStyle='rgba(8,5,0,.88)';
+  ctx.fillRect(cx-tw/2-7,cy-sprH+bob-16,tw+14,13);
+  ctx.strokeStyle=isMe?'#f0c040':'#8a6a2a';ctx.lineWidth=1;
+  ctx.strokeRect(cx-tw/2-7,cy-sprH+bob-16,tw+14,13);
+  ctx.fillStyle=isMe?'#f0c040':'#f0d888';
+  ctx.textAlign='center';ctx.textBaseline='top';
+  ctx.fillText(name,cx,cy-sprH+bob-15);
 }
 
-// ═══════════════════════════════════
-//  Speech bubble
-// ═══════════════════════════════════
+// ── Speech bubble ─────────────────────────
 function drawBubble(cx,cy,msg,color){
   ctx.font='bold 9px "Press Start 2P",monospace';
-  const maxW=140;
-  // Word wrap
-  const words=msg.split('');
-  const lines=[];
-  let cur='';
-  for(const ch of words){
-    const test=cur+ch;
-    if(ctx.measureText(test).width>maxW-16){lines.push(cur);cur=ch;}
-    else cur=test;
+  const maxW=130;
+  const chars=[...msg];
+  const lines=[];let cur='';
+  for(const ch of chars){
+    if(ctx.measureText(cur+ch).width>maxW-14){lines.push(cur);cur=ch;}
+    else cur+=ch;
   }
   if(cur)lines.push(cur);
-
   const lh=14,pad=7;
   const bw=Math.max(...lines.map(l=>ctx.measureText(l).width))+pad*2;
   const bh=lines.length*lh+pad*2;
-  const bx=cx-bw/2, by=cy-28-bh;
+  const bx=cx-bw/2,by=cy-bh;
 
-  // Bubble background
+  // Bubble shadow
+  ctx.fillStyle='rgba(0,0,0,0.2)';
+  ctx.beginPath();ctx.roundRect(bx+2,by+2,bw,bh,5);ctx.fill();
+  // Bubble body
   ctx.fillStyle='rgba(255,255,240,0.97)';
-  ctx.beginPath();
-  ctx.roundRect(bx,by,bw,bh,5);
-  ctx.fill();
-
-  // Border (class color)
+  ctx.beginPath();ctx.roundRect(bx,by,bw,bh,5);ctx.fill();
   ctx.strokeStyle=color||'#8a6a2a';ctx.lineWidth=2;
   ctx.beginPath();ctx.roundRect(bx,by,bw,bh,5);ctx.stroke();
-
   // Tail
   ctx.fillStyle='rgba(255,255,240,0.97)';
-  ctx.beginPath();ctx.moveTo(cx-5,by+bh);ctx.lineTo(cx+5,by+bh);ctx.lineTo(cx,by+bh+8);ctx.fill();
+  ctx.beginPath();ctx.moveTo(cx-5,by+bh);ctx.lineTo(cx+5,by+bh);ctx.lineTo(cx,by+bh+7);ctx.fill();
   ctx.strokeStyle=color||'#8a6a2a';ctx.lineWidth=2;
-  ctx.beginPath();ctx.moveTo(cx-5,by+bh+1);ctx.lineTo(cx,by+bh+8);ctx.lineTo(cx+5,by+bh+1);ctx.stroke();
-
+  ctx.beginPath();ctx.moveTo(cx-5,by+bh+1);ctx.lineTo(cx,by+bh+7);ctx.lineTo(cx+5,by+bh+1);ctx.stroke();
   // Text
   ctx.fillStyle='#2a1a00';ctx.textAlign='center';ctx.textBaseline='top';
   lines.forEach((l,i)=>ctx.fillText(l,cx,by+pad+i*lh));
 }
 
-// ═══════════════════════════════════
-//  Minimap
-// ═══════════════════════════════════
+// ── FX particles ──────────────────────────
+function addParticles(x,y,emoji,count){
+  for(let i=0;i<count;i++){
+    const ang=Math.random()*Math.PI*2;
+    const spd=2+Math.random()*4;
+    fxParticles.push({
+      x,y,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd-2,
+      life:1,decay:.02+Math.random()*.02,emoji,size:16+Math.random()*8
+    });
+  }
+}
+function updateFX(){
+  fxCtx.clearRect(0,0,fxC.width,fxC.height);
+  fxParticles=fxParticles.filter(p=>{
+    p.x+=p.vx;p.y+=p.vy;p.vy+=.08;p.life-=p.decay;
+    if(p.life<=0)return false;
+    fxCtx.save();fxCtx.globalAlpha=p.life;
+    fxCtx.font=`${p.size}px serif`;
+    fxCtx.textAlign='center';fxCtx.textBaseline='middle';
+    fxCtx.fillText(p.emoji,p.x,p.y);
+    fxCtx.restore();return true;
+  });
+}
+
+// ── Minimap ───────────────────────────────
 function drawMinimap(){
-  const mw=76,mh=50,sx=mw/MW,sy=mh/MH;
+  const mw=76,mh=50,scx=mw/MW,scy=mh/MH;
   mm.fillStyle='#6a4a1a';mm.fillRect(0,0,mw,mh);
-  // Viewport rect
+  // Zone colors on minimap
+  for(let y=0;y<MH;y+=2)for(let x=0;x<MW;x+=2){
+    const [c]=zoneColor(x,y);mm.fillStyle=c;mm.fillRect(x*scx,y*scy,scx*2,scy*2);
+  }
   mm.strokeStyle='rgba(240,192,64,.6)';mm.lineWidth=1;
-  mm.strokeRect(cam.x/TS*sx,cam.y/TS*sy,gc.width/TS*sx,gc.height/TS*sy);
-  // Players
+  mm.strokeRect(cam.x/TS*scx,cam.y/TS*scy,gc.width/TS*scx,gc.height/TS*scy);
   const now=Date.now();
   Object.entries(players).forEach(([id,p])=>{
     if(!p)return;if(id!==myId&&p.lastSeen&&now-p.lastSeen>12000)return;
-    mm.fillStyle=p.color||'#fff';
-    mm.fillRect(p.x/TS*sx-1,p.y/TS*sy-1,3,3);
+    mm.fillStyle=p.color||'#fff';mm.fillRect(p.x/TS*scx-1,p.y/TS*scy-1,3,3);
   });
-  // Self
-  mm.fillStyle='#f0c040';
-  mm.fillRect(myPos.x/TS*sx-2,myPos.y/TS*sy-2,4,4);
+  mm.fillStyle='#f0c040';mm.fillRect(myPos.x/TS*scx-2,myPos.y/TS*scy-2,4,4);
 }
 
-// ═══════════════════════════════════
-//  Util
-// ═══════════════════════════════════
+// ── Util ──────────────────────────────────
 function uid(){return Math.random().toString(36).slice(2)+Date.now().toString(36);}
 function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
 function notif(msg){
@@ -599,8 +580,6 @@ function notif(msg){
   document.getElementById('nArea').appendChild(el);setTimeout(()=>el.remove(),2800);
 }
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-
-// roundRect polyfill
 if(!CanvasRenderingContext2D.prototype.roundRect){
   CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r){
     this.beginPath();this.moveTo(x+r,y);this.lineTo(x+w-r,y);this.arcTo(x+w,y,x+w,y+r,r);
@@ -609,9 +588,17 @@ if(!CanvasRenderingContext2D.prototype.roundRect){
   };
 }
 
-// ═══════════════════════════════════
-//  Class select
-// ═══════════════════════════════════
+// ── Login preview (실시간 캐릭터 미리보기) ──
+let previewTimer=null;
+document.getElementById('nameIn').addEventListener('input',e=>{
+  clearTimeout(previewTimer);
+  previewTimer=setTimeout(()=>{
+    const v=e.target.value.trim()||'hero';
+    document.getElementById('previewImg').src=getDiceBearURL(v)+'&size=72';
+  },400);
+});
+
+// ── Class select ──────────────────────────
 document.querySelectorAll('.cb').forEach(b=>{
   b.addEventListener('click',()=>{
     document.querySelectorAll('.cb').forEach(x=>x.classList.remove('sel'));
@@ -619,9 +606,7 @@ document.querySelectorAll('.cb').forEach(b=>{
   });
 });
 
-// ═══════════════════════════════════
-//  Login
-// ═══════════════════════════════════
+// ── Start game ────────────────────────────
 document.getElementById('startBtn').onclick=startGame;
 document.getElementById('nameIn').onkeydown=e=>{if(e.key==='Enter')startGame();};
 
@@ -639,32 +624,30 @@ function startGame(){
 
   myName=name;myId=uid();myColor=CLS_C[myClass];
   genDecor();
+  // Preload own sprite
+  getSprite(myName);
 
-  const sx=Math.floor(MW/2)*TS, sy=Math.floor(MH/2)*TS;
+  const sx=Math.floor(MW/2)*TS,sy=Math.floor(MH/2)*TS;
   myPos={x:sx,y:sy};myDir=DIR.DOWN;
   cam={x:sx-gc.width/2,y:sy-gc.height/2};
   document.getElementById('pName').textContent=CLS_I[myClass]+' '+myName;
 
-  // Firebase
   const myRef=db.ref('players/'+myId);
   myRef.set({name:myName,color:myColor,jobClass:myClass,x:sx,y:sy,dir:myDir,lastSeen:Date.now()});
   myRef.onDisconnect().remove();
 
   db.ref('players').on('value',s=>{
     players=s.val()||{};
+    // Preload sprites for all players
+    Object.values(players).forEach(p=>{if(p&&p.name)getSprite(p.name);});
     const cnt=Object.values(players).filter(p=>p&&Date.now()-(p.lastSeen||0)<12000).length;
     document.getElementById('oc').textContent='👥 '+cnt+'명';
   });
 
-  // Chat listener
   db.ref('chat').limitToLast(60).on('child_added',s=>{
     const m=s.val();if(!m)return;
     addChatMsg(m);
-    // Set speech bubble
-    if(m.pid&&m.msg){
-      bubbles[m.pid]={msg:m.msg,color:m.color,expire:Date.now()+BUBBLE_DURATION};
-    }
-    // Unread badge
+    if(m.pid&&m.msg) bubbles[m.pid]={msg:m.msg,color:m.color,expire:Date.now()+4000};
     if(!chatOpen&&m.pid!==myId){
       unreadCount++;
       const badge=document.getElementById('chatUnread');
@@ -673,9 +656,17 @@ function startGame(){
     }
   });
 
+  // Listen for attacks
+  db.ref('events').limitToLast(1).on('child_added',s=>{
+    const ev=s.val();if(!ev||ev.to!==myId||ev.type!=='attack')return;
+    document.getElementById('hitFlash').style.background='rgba(255,0,0,0.3)';
+    setTimeout(()=>document.getElementById('hitFlash').style.background='',200);
+    const att=players[ev.from];
+    if(att)notif('💥 '+att.name+'에게 공격당했다!');
+  });
+
   document.getElementById('loginScreen').style.display='none';
   notif(CLS_I[myClass]+' '+myName+'! 황무지에 도착했다');
-  listenEvents();
   loop();
 }
 
@@ -685,57 +676,10 @@ function syncPos(){
   db.ref('players/'+myId).update({x:myPos.x,y:myPos.y,dir:myDir,lastSeen:now});
 }
 
-// ═══════════════════════════════════
-//  Chat
-// ═══════════════════════════════════
-function addChatMsg(m){
-  const log=document.getElementById('chatLog');
-  const d=document.createElement('div');d.className='cm';
-  if(m.system){d.classList.add('sys');d.textContent=m.msg;}
-  else{
-    d.innerHTML=(CLS_I[m.jobClass]||'👤')+
-      ' <span class="sn" style="color:'+(m.color||'#f0c040')+'">'+esc(m.name)+'</span>: '+esc(m.msg);
-  }
-  log.appendChild(d);
-  log.scrollTop=log.scrollHeight;
-}
-
-function sendChat(){
-  const msg=document.getElementById('chatIn').value.trim();
-  if(!msg||!db)return;
-  document.getElementById('chatIn').value='';
-  const data={name:myName,color:myColor,jobClass:myClass,msg,pid:myId,t:Date.now()};
-  db.ref('chat').push(data);
-  // Own bubble
-  bubbles[myId]={msg,color:myColor,expire:Date.now()+BUBBLE_DURATION};
-}
-
-// Chat panel open/close
-document.getElementById('chatToggle').onclick=()=>{
-  chatOpen=!chatOpen;
-  document.getElementById('chatPanel').classList.toggle('open',chatOpen);
-  if(chatOpen){
-    unreadCount=0;
-    const badge=document.getElementById('chatUnread');
-    badge.style.display='none';
-    document.getElementById('chatLog').scrollTop=document.getElementById('chatLog').scrollHeight;
-    setTimeout(()=>document.getElementById('chatIn').focus(),300);
-  }
-};
-document.getElementById('chatX').onclick=()=>{
-  chatOpen=false;document.getElementById('chatPanel').classList.remove('open');
-};
-document.getElementById('chatSd').onclick=sendChat;
-document.getElementById('chatIn').onkeydown=e=>{if(e.key==='Enter')sendChat();};
-
-// ═══════════════════════════════════
-//  Joystick (4-direction snap)
-// ═══════════════════════════════════
+// ── Joystick ──────────────────────────────
 const jWrap=document.getElementById('jWrap');
 const jKnob=document.getElementById('jKnob');
-const JR=44;
-let jTouchId=null;
-
+const JR=44;let jTouchId=null;
 jWrap.addEventListener('touchstart',e=>{
   e.preventDefault();e.stopPropagation();
   if(jTouchId!==null)return;
@@ -751,58 +695,162 @@ jWrap.addEventListener('touchmove',e=>{
     handleJoy(t.clientX-(r.left+r.width/2),t.clientY-(r.top+r.height/2));
   }
 },{passive:false});
-function jRelease(){
-  jTouchId=null;
-  held.up=held.down=held.left=held.right=false;
-  jKnob.style.transform='translate(0,0)';
-}
-jWrap.addEventListener('touchend',e=>{
-  e.preventDefault();e.stopPropagation();
-  for(const t of e.changedTouches){if(t.identifier===jTouchId)jRelease();}
-},{passive:false});
-jWrap.addEventListener('touchcancel',e=>{jRelease();},{passive:false});
-
+function jRelease(){jTouchId=null;held.up=held.down=held.left=held.right=false;jKnob.style.transform='translate(0,0)';}
+jWrap.addEventListener('touchend',e=>{e.preventDefault();for(const t of e.changedTouches)if(t.identifier===jTouchId)jRelease();},{passive:false});
+jWrap.addEventListener('touchcancel',jRelease);
 function handleJoy(dx,dy){
   const dist=Math.sqrt(dx*dx+dy*dy);
-  if(dist<12){
-    held.up=held.down=held.left=held.right=false;
-    jKnob.style.transform='translate(0,0)';return;
-  }
+  if(dist<12){held.up=held.down=held.left=held.right=false;jKnob.style.transform='translate(0,0)';return;}
   const cd=Math.min(dist,JR),ang=Math.atan2(dy,dx);
   jKnob.style.transform=`translate(${Math.cos(ang)*cd}px,${Math.sin(ang)*cd}px)`;
   held.up=false;held.down=false;held.left=false;held.right=false;
   const deg=ang*(180/Math.PI);
-  if(deg>=-45&&deg<45)       held.right=true;
-  else if(deg>=45&&deg<135)  held.down=true;
+  if(deg>=-45&&deg<45)held.right=true;
+  else if(deg>=45&&deg<135)held.down=true;
   else if(deg>=-135&&deg<-45)held.up=true;
-  else                        held.left=true;
+  else held.left=true;
 }
 
-// ═══════════════════════════════════
-//  Movement
-// ═══════════════════════════════════
+// ── Action buttons ────────────────────────
+function myScreenPos(){return{x:myPos.x-cam.x+TS/2,y:myPos.y-cam.y+TS/2};}
+function getEntityInFront(){
+  const range=TS*1.6;
+  let fx=myPos.x,fy=myPos.y;
+  if(myDir===DIR.UP)fy-=TS;else if(myDir===DIR.DOWN)fy+=TS;
+  else if(myDir===DIR.LEFT)fx-=TS;else fx+=TS;
+  let closest=null,closestDist=range;
+  const now=Date.now();
+  Object.entries(players).forEach(([id,p])=>{
+    if(!p||id===myId)return;if(p.lastSeen&&now-p.lastSeen>12000)return;
+    const d=Math.sqrt((p.x-fx)**2+(p.y-fy)**2);
+    if(d<closestDist){closestDist=d;closest={...p,id};}
+  });
+  return closest;
+}
+
+// A — 공격
+document.getElementById('btnA').addEventListener('click',()=>{
+  const now=Date.now();if(now<attackCooldown){notif('⏳ 쿨타임!');return;}
+  attackCooldown=now+800;
+  const sp=myScreenPos();
+  addParticles(sp.x,sp.y-20,'⚔️',8);
+  document.getElementById('hitFlash').style.background='rgba(255,80,0,0.15)';
+  setTimeout(()=>document.getElementById('hitFlash').style.background='',120);
+  const target=getEntityInFront();
+  if(target){
+    addParticles(target.x-cam.x+TS/2,target.y-cam.y+TS/2,'💥',10);
+    notif('⚔️ '+target.name+' 공격!');
+    if(db)db.ref('events').push({type:'attack',from:myId,to:target.id,t:now});
+  }else notif('⚔️ 공격! (빗나감)');
+});
+
+// B — 스킬
+document.getElementById('btnB').addEventListener('click',()=>{
+  const now=Date.now();if(now<skillCooldown){notif('⏳ 스킬 쿨타임!');return;}
+  skillCooldown=now+2000;
+  const sk=SKILLS[myClass];
+  const sp=myScreenPos();
+  addParticles(sp.x,sp.y-20,sk.emoji,20);
+  gc.style.transition='transform .08s';
+  gc.style.transform='translate(3px,0)';setTimeout(()=>gc.style.transform='translate(-3px,0)',80);setTimeout(()=>gc.style.transform='',160);
+  notif('✨ '+sk.name+'!');
+});
+
+// C — 상호작용
+document.getElementById('btnC').addEventListener('click',()=>{
+  const target=getEntityInFront();
+  if(!target){notif('🔍 근처에 아무도 없다');return;}
+  const greets=['안녕하세요!','반가워요!','잘 부탁해요!','같이 해요!'];
+  const msg=greets[Math.floor(Math.random()*greets.length)];
+  if(db)db.ref('chat').push({name:myName,color:myColor,jobClass:myClass,msg,pid:myId,t:Date.now()});
+  bubbles[myId]={msg,color:myColor,expire:Date.now()+4000};
+  const sp=myScreenPos();addParticles(sp.x,sp.y-30,'💕',8);
+  notif('💬 '+target.name+'에게 인사!');
+});
+
+// D — 커스텀
+let dPopupOpen=false;
+const D_ACT={
+  emote_wave:{bubble:'(손을 흔든다)',emoji:'👋',msg:'👋 손흔들기!'},
+  emote_heart:{bubble:'(하트~)',emoji:'❤️',msg:'❤️ 하트 전송!'},
+  emote_laugh:{bubble:'ㅋㅋㅋ',emoji:'😂',msg:'😂 웃음!'},
+  emote_angry:{bubble:'...!',emoji:'😡',msg:'😡 화남!'},
+  sprint:{bubble:null,emoji:'💨',msg:'💨 달리기!'},
+};
+document.getElementById('btnD').addEventListener('click',()=>{
+  if(dPopupOpen){dPopupOpen=false;document.getElementById('dPopup').classList.remove('open');return;}
+  const act=D_ACT[dConfig];
+  if(dConfig==='sprint'){sprintActive=true;notif(act.msg);setTimeout(()=>sprintActive=false,3000);return;}
+  const sp=myScreenPos();addParticles(sp.x,sp.y-20,act.emoji,10);
+  if(act.bubble){
+    bubbles[myId]={msg:act.bubble,color:myColor,expire:Date.now()+3000};
+    if(db)db.ref('chat').push({name:myName,color:myColor,jobClass:myClass,msg:act.bubble,pid:myId,t:Date.now()});
+  }
+  notif(act.msg);
+});
+document.getElementById('btnD').addEventListener('touchstart',e=>{
+  e.stopPropagation();
+},{passive:true});
+// Long press to open config
+let dLongPress=null;
+document.getElementById('btnD').addEventListener('touchstart',e=>{
+  dLongPress=setTimeout(()=>{
+    dPopupOpen=true;document.getElementById('dPopup').classList.add('open');
+  },600);
+},{passive:true});
+document.getElementById('btnD').addEventListener('touchend',()=>clearTimeout(dLongPress));
+
+document.querySelectorAll('.dopt').forEach(opt=>{
+  opt.addEventListener('click',e=>{
+    e.stopPropagation();
+    document.querySelectorAll('.dopt').forEach(o=>o.classList.remove('selected'));
+    opt.classList.add('selected');dConfig=opt.dataset.d;
+    const icons={emote_wave:'👋',emote_heart:'❤️',emote_laugh:'😂',emote_angry:'😡',sprint:'💨'};
+    document.querySelector('#btnD .bi').textContent=icons[dConfig]||'⭐';
+    dPopupOpen=false;document.getElementById('dPopup').classList.remove('open');
+    notif('D → '+opt.textContent+' 설정됨');
+  });
+});
+document.addEventListener('click',()=>{if(dPopupOpen){dPopupOpen=false;document.getElementById('dPopup').classList.remove('open');}});
+
+// Chat
+document.getElementById('chatToggle').onclick=()=>{
+  chatOpen=!chatOpen;document.getElementById('chatPanel').classList.toggle('open',chatOpen);
+  if(chatOpen){unreadCount=0;const b=document.getElementById('chatUnread');b.style.display='none';}
+};
+document.getElementById('chatX').onclick=()=>{chatOpen=false;document.getElementById('chatPanel').classList.remove('open');};
+document.getElementById('chatSd').onclick=sendChat;
+document.getElementById('chatIn').onkeydown=e=>{if(e.key==='Enter')sendChat();};
+function sendChat(){
+  const msg=document.getElementById('chatIn').value.trim();if(!msg||!db)return;
+  document.getElementById('chatIn').value='';
+  db.ref('chat').push({name:myName,color:myColor,jobClass:myClass,msg,pid:myId,t:Date.now()});
+}
+function addChatMsg(m){
+  const log=document.getElementById('chatLog');
+  const d=document.createElement('div');d.className='cm';
+  if(m.system){d.classList.add('sys');d.textContent=m.msg;}
+  else d.innerHTML=(CLS_I[m.jobClass]||'👤')+' <span class="sn" style="color:'+(m.color||'#f0c040')+'">'+esc(m.name)+'</span>: '+esc(m.msg);
+  log.appendChild(d);log.scrollTop=log.scrollHeight;
+}
+
+// ── Movement ──────────────────────────────
 const SPD=2.8;
 function updateMove(){
   if(!myId)return;
-  const speed=sprintActive?SPD*1.9:SPD;
+  const spd=sprintActive?SPD*1.9:SPD;
   let dx=0,dy=0;
-  if(held.up){dy=-speed;myDir=DIR.UP;}
-  else if(held.down){dy=speed;myDir=DIR.DOWN;}
-  else if(held.left){dx=-speed;myDir=DIR.LEFT;}
-  else if(held.right){dx=speed;myDir=DIR.RIGHT;}
-
+  if(held.up){dy=-spd;myDir=DIR.UP;}
+  else if(held.down){dy=spd;myDir=DIR.DOWN;}
+  else if(held.left){dx=-spd;myDir=DIR.LEFT;}
+  else if(held.right){dx=spd;myDir=DIR.RIGHT;}
   if(dx!==0||dy!==0){
-    walkTick++;
-    myWalkFrame=Math.floor(walkTick/10)%2;
-    const nx=clamp(myPos.x+dx,0,MW*TS-1);
-    const ny=clamp(myPos.y+dy,0,MH*TS-1);
-    myPos.x=nx;myPos.y=ny;
+    walkTick++;myWalkFrame=Math.floor(walkTick/10)%2;
+    myPos.x=clamp(myPos.x+dx,0,MW*TS-1);
+    myPos.y=clamp(myPos.y+dy,0,MH*TS-1);
     syncPos();
-  }else{
-    myWalkFrame=0;walkTick=0;
-  }
+  }else{myWalkFrame=0;walkTick=0;}
 }
-
 function updateCam(){
   const tx=myPos.x-gc.width/2,ty=myPos.y-gc.height/2;
   cam.x+=(tx-cam.x)*.12;cam.y+=(ty-cam.y)*.12;
@@ -810,351 +858,50 @@ function updateCam(){
   cam.y=clamp(cam.y,0,Math.max(0,MH*TS-gc.height));
 }
 
-// ═══════════════════════════════════
-//  Render
-// ═══════════════════════════════════
+// ── Render ────────────────────────────────
 function drawWorld(){
   const sx=Math.floor(cam.x/TS),sy=Math.floor(cam.y/TS);
   const ex=Math.min(MW,sx+Math.ceil(gc.width/TS)+2);
   const ey=Math.min(MH,sy+Math.ceil(gc.height/TS)+2);
-  for(let y=sy;y<ey;y++)
-    for(let x=sx;x<ex;x++)
-      drawGround(x,y,x*TS-cam.x,y*TS-cam.y);
+  for(let y=sy;y<ey;y++)for(let x=sx;x<ex;x++)drawGround(x,y,x*TS-cam.x,y*TS-cam.y,0);
 }
 
 function drawAllPlayers(now){
   const list=[];
   Object.entries(players).forEach(([id,p])=>{
-    if(!p)return;
-    if(id!==myId&&p.lastSeen&&now-p.lastSeen>12000)return;
+    if(!p)return;if(id!==myId&&p.lastSeen&&now-p.lastSeen>12000)return;
     list.push({...p,id,isMe:id===myId});
   });
-  // Self (use real-time pos)
-  // Replace self in list with current pos
   const selfIdx=list.findIndex(p=>p.isMe);
   if(selfIdx>=0){list[selfIdx].x=myPos.x;list[selfIdx].y=myPos.y;list[selfIdx].dir=myDir;}
   else list.push({x:myPos.x,y:myPos.y,name:myName,color:myColor,jobClass:myClass,dir:myDir,id:myId,isMe:true});
-
-  // Sort by Y for depth
   list.sort((a,b)=>a.y-b.y);
-
   list.forEach(p=>{
     const sx=p.x-cam.x,sy=p.y-cam.y;
     if(sx<-80||sy<-100||sx>gc.width+80||sy>gc.height+100)return;
     const frame=p.isMe?myWalkFrame:Math.floor(now/240+p.x*.01)%2;
     const dir=p.isMe?myDir:(p.dir||DIR.DOWN);
-
-    drawCharSprite(sx+TS/2,sy+TS/2,p.color||'#e04428',p.jobClass||'warrior',dir,frame,p.isMe);
-
-    // Name tag
-    const nameStr=p.name+(p.isMe?' ★':'');
-    ctx.font='bold 8px "Press Start 2P",monospace';
-    const tw=ctx.measureText(nameStr).width;
-    ctx.fillStyle='rgba(8,5,0,.85)';
-    ctx.fillRect(sx+TS/2-tw/2-6,sy+TS/2-36,tw+12,12);
-    ctx.strokeStyle=p.isMe?'#f0c040':'#8a6a2a';ctx.lineWidth=1;
-    ctx.strokeRect(sx+TS/2-tw/2-6,sy+TS/2-36,tw+12,12);
-    ctx.fillStyle=p.isMe?'#f0c040':'#f0d888';
-    ctx.textAlign='center';ctx.textBaseline='top';
-    ctx.fillText(nameStr,sx+TS/2,sy+TS/2-35);
-
-    // Speech bubble
+    drawCharacter(sx+TS/2,sy+TS/2,p.name,dir,frame,p.isMe,p.name+(p.isMe?' ★':''),p.color||'#888',p.jobClass||'warrior');
+    // Bubble
     const bubble=bubbles[p.id];
-    if(bubble&&now<bubble.expire){
-      drawBubble(sx+TS/2,sy+TS/2-38,bubble.msg,bubble.color||p.color);
-    }
+    if(bubble&&now<bubble.expire){drawBubble(sx+TS/2,sy-10,bubble.msg,bubble.color||p.color);}
   });
 }
 
-// ═══════════════════════════════════
-//  FX Canvas
-// ═══════════════════════════════════
-const fxC=document.getElementById('fxCanvas');
-const fxCtx=fxC.getContext('2d');
-fxC.width=window.innerWidth;fxC.height=window.innerHeight;
-window.addEventListener('resize',()=>{fxC.width=window.innerWidth;fxC.height=window.innerHeight;});
-let fxParticles=[];
-
-function addParticles(x,y,color,count,type){
-  for(let i=0;i<count;i++){
-    const ang=Math.random()*Math.PI*2;
-    const spd=type==='skill'?2+Math.random()*4:1.5+Math.random()*3;
-    fxParticles.push({
-      x,y,
-      vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd,
-      life:1,decay:0.02+Math.random()*0.03,
-      size:type==='skill'?6+Math.random()*8:4+Math.random()*5,
-      color,type
-    });
-  }
-}
-
-function updateFX(){
-  fxCtx.clearRect(0,0,fxC.width,fxC.height);
-  fxParticles=fxParticles.filter(p=>{
-    p.x+=p.vx;p.y+=p.vy;p.vy+=0.1;
-    p.life-=p.decay;if(p.life<=0)return false;
-    fxCtx.save();
-    fxCtx.globalAlpha=p.life;
-    fxCtx.fillStyle=p.color;
-    if(p.type==='skill'){
-      fxCtx.font=`${p.size*2}px serif`;
-      fxCtx.textAlign='center';fxCtx.textBaseline='middle';
-      fxCtx.fillText(p.emoji||'✨',p.x,p.y);
-    }else{
-      fxCtx.beginPath();fxCtx.arc(p.x,p.y,p.size,0,Math.PI*2);fxCtx.fill();
-    }
-    fxCtx.restore();
-    return true;
-  });
-}
-
-// ═══════════════════════════════════
-//  Get entity in front of player
-// ═══════════════════════════════════
-function getEntityInFront(){
-  const range=TS*1.5;
-  let fx=myPos.x, fy=myPos.y;
-  if(myDir===DIR.UP)    fy-=TS;
-  else if(myDir===DIR.DOWN) fy+=TS;
-  else if(myDir===DIR.LEFT) fx-=TS;
-  else fx+=TS;
-
-  // Find closest player in front direction
-  let closest=null, closestDist=range;
-  const now=Date.now();
-  Object.entries(players).forEach(([id,p])=>{
-    if(!p||id===myId)return;
-    if(p.lastSeen&&now-p.lastSeen>12000)return;
-    const dist=Math.sqrt((p.x-fx)**2+(p.y-fy)**2);
-    if(dist<closestDist){closestDist=dist;closest={...p,id};}
-  });
-  return closest;
-}
-
-// Screen coords of my character
-function myScreenPos(){
-  return {
-    x:myPos.x-cam.x+TS/2,
-    y:myPos.y-cam.y+TS/2
-  };
-}
-
-// ═══════════════════════════════════
-//  A — Attack
-// ═══════════════════════════════════
-let attackCooldown=0;
-function doAttack(){
-  const now=Date.now();
-  if(now<attackCooldown){notif('⏳ 쿨타임 중...');return;}
-  attackCooldown=now+800;
-
-  const target=getEntityInFront();
-  const sp=myScreenPos();
-
-  // Attack visual: slash particles
-  const slashColor={warrior:'#ffaaaa',mage:'#aaaaff',archer:'#aaffaa',healer:'#ffffaa'}[myClass]||'#fff';
-  addParticles(sp.x,sp.y-10,slashColor,12,'attack');
-
-  // Hit flash
-  const flash=document.getElementById('hitFlash');
-  flash.style.background='rgba(255,50,0,0.25)';
-  setTimeout(()=>flash.style.background='rgba(255,50,0,0)',150);
-
-  if(target){
-    // Attack target particle at their screen pos
-    const tx=target.x-cam.x+TS/2, ty=target.y-cam.y+TS/2;
-    addParticles(tx,ty,'#ff4444',16,'attack');
-    notif('⚔️ '+target.name+' 을(를) 공격했다!');
-    // Broadcast attack to DB
-    if(db) db.ref('events').push({type:'attack',from:myId,to:target.id,t:now});
-  }else{
-    notif('⚔️ 공격! (대상 없음)');
-  }
-
-  // Swing animation: briefly shift knob
-  const icon=document.querySelector('#btnA .bi');
-  icon.style.transform='scale(1.4)';
-  setTimeout(()=>icon.style.transform='',200);
-}
-
-// ═══════════════════════════════════
-//  B — Skill / Magic
-// ═══════════════════════════════════
-let skillCooldown=0;
-const SKILLS={
-  warrior:{name:'회오리베기',emoji:'🌀',color:'#ff8844',count:20},
-  mage:   {name:'파이어볼',  emoji:'🔥',color:'#ff4400',count:25},
-  archer: {name:'화살비',    emoji:'🏹',color:'#aaff44',count:20},
-  healer: {name:'힐링',      emoji:'💚',color:'#44ff88',count:18},
-};
-function doSkill(){
-  const now=Date.now();
-  if(now<skillCooldown){notif('⏳ 스킬 쿨타임 중...');return;}
-  skillCooldown=now+2000;
-
-  const sk=SKILLS[myClass];
-  const sp=myScreenPos();
-
-  // Big skill particles
-  for(let i=0;i<sk.count;i++){
-    const ang=Math.random()*Math.PI*2;
-    const spd=3+Math.random()*5;
-    fxParticles.push({
-      x:sp.x,y:sp.y-10,
-      vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd-2,
-      life:1,decay:0.015+Math.random()*0.02,
-      size:8,color:sk.color,type:'skill',emoji:sk.emoji
-    });
-  }
-
-  // Screen shake effect (CSS)
-  gc.style.transform='translate(4px,0)';
-  setTimeout(()=>gc.style.transform='translate(-4px,0)',80);
-  setTimeout(()=>gc.style.transform='',160);
-
-  notif('✨ '+sk.name+'!');
-  if(db) db.ref('events').push({type:'skill',from:myId,skill:sk.name,t:now});
-
-  const icon=document.querySelector('#btnB .bi');
-  icon.style.transform='scale(1.5) rotate(20deg)';
-  setTimeout(()=>icon.style.transform='',300);
-}
-
-// ═══════════════════════════════════
-//  C — Interact
-// ═══════════════════════════════════
-function doInteract(){
-  const target=getEntityInFront();
-  if(!target){notif('🔍 주변에 아무도 없다...');return;}
-
-  // Show greeting bubble to target
-  const greets=['안녕하세요!','반가워요!','잘 부탁해요!','같이 모험해요!'];
-  const msg=greets[Math.floor(Math.random()*greets.length)];
-  if(db) db.ref('chat').push({name:myName,color:myColor,jobClass:myClass,msg,pid:myId,t:Date.now()});
-  bubbles[myId]={msg,color:myColor,expire:Date.now()+4000};
-  notif('💬 '+target.name+' 에게 인사했다!');
-
-  // Heart particles
-  const sp=myScreenPos();
-  for(let i=0;i<8;i++){
-    fxParticles.push({
-      x:sp.x+(Math.random()-0.5)*40,y:sp.y-10,
-      vx:(Math.random()-0.5)*2,vy:-2-Math.random()*2,
-      life:1,decay:0.02,size:10,color:'#ff88aa',type:'skill',emoji:'💕'
-    });
-  }
-}
-
-// ═══════════════════════════════════
-//  D — User configurable
-// ═══════════════════════════════════
-let dConfig='emote_wave';
-const D_EMOTES={
-  emote_wave: {msg:'👋 손을 흔들었다!',   emoji:'👋', bubble:'(손을 흔든다)'},
-  emote_heart:{msg:'❤️ 하트를 보냈다!',   emoji:'❤️', bubble:'(하트~)'},
-  emote_laugh:{msg:'😂 웃었다!',           emoji:'😂', bubble:'ㅋㅋㅋ'},
-  emote_angry:{msg:'😡 화를 냈다!',        emoji:'😡', bubble:'...!'},
-  sprint:     {msg:'💨 전력질주!',         emoji:null,  bubble:null},
-};
-let sprintActive=false;
-
-function doD(){
-  const conf=D_EMOTES[dConfig];
-  if(!conf)return;
-
-  if(dConfig==='sprint'){
-    sprintActive=true;
-    notif('💨 달리기!');
-    setTimeout(()=>{sprintActive=false;},3000);
-    return;
-  }
-
-  // Emote
-  const sp=myScreenPos();
-  if(conf.emoji){
-    for(let i=0;i<10;i++){
-      fxParticles.push({
-        x:sp.x+(Math.random()-0.5)*30,y:sp.y-10,
-        vx:(Math.random()-0.5)*1.5,vy:-1.5-Math.random()*2,
-        life:1,decay:0.018,size:12,color:'#fff',type:'skill',emoji:conf.emoji
-      });
-    }
-  }
-  if(conf.bubble){
-    bubbles[myId]={msg:conf.bubble,color:myColor,expire:Date.now()+3000};
-    if(db) db.ref('chat').push({name:myName,color:myColor,jobClass:myClass,msg:conf.bubble,pid:myId,t:Date.now()});
-  }
-  notif(conf.msg);
-}
-
-// D config popup
-let dPopupOpen=false;
-document.getElementById('btnD').addEventListener('touchstart',e=>{
-  e.preventDefault();e.stopPropagation();
-},{passive:false});
-document.getElementById('btnD').addEventListener('click',()=>{
-  dPopupOpen=!dPopupOpen;
-  document.getElementById('dPopup').classList.toggle('open',dPopupOpen);
-});
-document.querySelectorAll('.dopt').forEach(opt=>{
-  opt.addEventListener('click',e=>{
-    e.stopPropagation();
-    document.querySelectorAll('.dopt').forEach(o=>o.classList.remove('selected'));
-    opt.classList.add('selected');
-    dConfig=opt.dataset.d;
-    // Update D button icon
-    const icons={emote_wave:'👋',emote_heart:'❤️',emote_laugh:'😂',emote_angry:'😡',sprint:'💨'};
-    document.querySelector('#btnD .bi').textContent=icons[dConfig]||'⭐';
-    dPopupOpen=false;document.getElementById('dPopup').classList.remove('open');
-    notif('D버튼 → '+opt.textContent+' 로 설정됨');
-    doD(); // fire immediately
-  });
-});
-// Close popup on outside tap
-document.addEventListener('click',()=>{
-  if(dPopupOpen){dPopupOpen=false;document.getElementById('dPopup').classList.remove('open');}
-});
-
-// Button listeners
-document.getElementById('btnA').addEventListener('click',doAttack);
-document.getElementById('btnB').addEventListener('click',doSkill);
-document.getElementById('btnC').addEventListener('click',doInteract);
-
-// Listen for incoming attacks
-function listenEvents(){
-  if(!db)return;
-  db.ref('events').limitToLast(1).on('child_added',s=>{
-    const ev=s.val();if(!ev)return;
-    if(ev.to===myId&&ev.type==='attack'){
-      // Got hit!
-      const flash=document.getElementById('hitFlash');
-      flash.style.background='rgba(255,0,0,0.35)';
-      setTimeout(()=>flash.style.background='rgba(255,50,0,0)',200);
-      const attacker=players[ev.from];
-      if(attacker) notif('💥 '+attacker.name+' 에게 공격당했다!');
-    }
-  });
-}
-
-// ═══════════════════════════════════
-//  Main loop
-// ═══════════════════════════════════
+// ── Main loop ─────────────────────────────
 function loop(){
   const now=Date.now();
   updateMove();updateCam();
-
-  // Background (horizon sky)
-  ctx.fillStyle='#c8a86a';ctx.fillRect(0,0,gc.width,gc.height);
-
+  // Sky gradient (황무지 분위기)
+  const sky=ctx.createLinearGradient(0,0,0,gc.height);
+  sky.addColorStop(0,'#c8a878');sky.addColorStop(1,'#e0c090');
+  ctx.fillStyle=sky;ctx.fillRect(0,0,gc.width,gc.height);
   drawWorld();
   drawAllPlayers(now);
-
   // Vignette
   const vg=ctx.createRadialGradient(gc.width/2,gc.height/2,gc.height*.2,gc.width/2,gc.height/2,gc.height*.88);
-  vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.32)');
+  vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.3)');
   ctx.fillStyle=vg;ctx.fillRect(0,0,gc.width,gc.height);
-
   drawMinimap();
   updateFX();
   requestAnimationFrame(loop);
